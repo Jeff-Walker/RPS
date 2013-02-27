@@ -11,50 +11,59 @@ public class Game implements IGame {
 
 	@Override
 	public void setGameConfig(IGameConfig gameConfig) {
+		throw new UnsupportedOperationException("Not implemented yet");
 		// TODO Auto-generated method stub
-
+		//
 	}
 
 	@Override
 	public IGameConfig getGameConfig() {
+		throw new UnsupportedOperationException("Not implemented yet");
 		// TODO Auto-generated method stub
-		return null;
+		//return null;
 	}
 
 	@Override
 	public List<IPlayer> getPlayers() {
+		throw new UnsupportedOperationException("Not implemented yet");
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Map<IPlayer, IWeapon> getPlays() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IPlayer getWinner() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean hasWinner() {
-		// TODO Auto-generated method stub
-		return false;
+		//return null;
 	}
 
 	@Override
 	public void add(IPlayer player) {
+		throw new UnsupportedOperationException("Not implemented yet");
 		// TODO Auto-generated method stub
+		//
+	}
 
+	@Override
+	public Map<IPlayer, IWeapon> getPlays() {
+		throw new UnsupportedOperationException("Not implemented yet");
+		// TODO Auto-generated method stub
+		//return null;
 	}
 
 	@Override
 	public boolean hasPlayed() {
+		throw new UnsupportedOperationException("Not implemented yet");
 		// TODO Auto-generated method stub
-		return false;
+		//return false;
 	}
 
+	@Override
+	public IPlayer getWinner() {
+		throw new UnsupportedOperationException("Not implemented yet");
+		// TODO Auto-generated method stub
+		//return null;
+	}
+
+	@Override
+	public boolean hasWinner() {
+		throw new UnsupportedOperationException("Not implemented yet");
+		// TODO Auto-generated method stub
+		//return false;
+	}
+
+	
 }
