@@ -19,4 +19,8 @@ public interface IGame {
 	IPlayer getWinner();
 
 	boolean hasWinner();
+
+	public abstract void reset();
+
+	public abstract void resetAll();
 }

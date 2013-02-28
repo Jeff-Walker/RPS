@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class GamePlays {
+public class TwoPlayerGamePlays {
 	@Rule public JUnitRuleMockery context = new JUnitRuleMockery();
 
 	IGame sut;
@@ -34,7 +34,7 @@ public class GamePlays {
 
 	@Before
 	public void setUp() throws Exception {
-		sut = new Game(gameConfig);
+		sut = new TwoPlayerGame(gameConfig);
 		sut.add(player1);
 		sut.add(player2);
 
@@ -43,6 +43,7 @@ public class GamePlays {
 				
 				allowing(firstWeapon).doesBeat(beatsFirstWeapon);
 				will(returnValue(false));
+				
 				
 //				weaponList = Arrays.asList(firstWeapon, weapon2, weapon3);
 //
