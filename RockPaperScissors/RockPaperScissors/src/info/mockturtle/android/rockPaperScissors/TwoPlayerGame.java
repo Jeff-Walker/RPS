@@ -17,7 +17,6 @@ public class TwoPlayerGame implements IGame {
 	
 	public TwoPlayerGame(IGameConfig gameConfig) {
 		this.gameConfig = gameConfig;
-		
 	}
 
 	@Override
@@ -39,9 +38,56 @@ public class TwoPlayerGame implements IGame {
 	public void add(IPlayer player) {
 		players.add(player);
 	}
-
-	@Override
+	
+	public Map<IPlayer, IWeapon> getPlays_general() {
+		if ( players.size() != 2 ) {
+			throw new IllegalStateException("need 2 players");
+		}
+		playsMap.clear();
+		winner = null;
+		
+		Map<IPlayer, IWeapon> playsMap = buildPlayMap();
+		IWeapon winningWeapon = null;
+		for ( IWeapon w : playsMap.values() ) {
+			if ( winningWeapon == null || w.doesBeat(winningWeapon)) {
+				winningWeapon = w;
+			}
+		}
+		
+		IPlayer winningPlayer = null;
+		int winnerCount = 0;
+		for ( Map.Entry<IPlayer, IWeapon> e : playsMap.entrySet() ) {
+			if ( e.getValue().equals(winningWeapon)) {
+				winningPlayer = e.getKey();
+				winnerCount++;
+			}
+		}
+		
+		if ( winnerCount > 1 ) {
+			winner = winningPlayer;
+		}
+		hasPlayed = true;
+		return playsMap;
+	}
+	
+	@Override	
 	public Map<IPlayer, IWeapon> getPlays() {
+		return getPlays_general();
+	}
+
+	private Map<IPlayer, IWeapon> buildPlayMap() {
+		Map<IPlayer, IWeapon> map = new HashMap<IPlayer, IWeapon>();
+		for ( IPlayer p : players ) {
+			IWeapon play = p.getPlay();
+			if ( play == null ) {
+				throw new IllegalArgumentException("player " + p.getId() + " has null weapon.");
+			}
+			map.put(p, play);
+		}
+		return map;
+	}
+
+	Map<IPlayer, IWeapon> getPlays_simplistic() {
 		if ( players.size() != 2 ) {
 			throw new IllegalStateException("need 2 players");
 		}

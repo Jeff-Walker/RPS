@@ -26,8 +26,8 @@ public class TwoPlayerGamePlays {
 //	@Mock IWeapon weapon3;
 	
 	@Mock IWeapon firstWeapon;
-	@Mock IWeapon beatsFirstWeapon;
-	@Mock IWeapon isBeatByFirstWeapon;
+	@Mock IWeapon secondWeapon_beatsFirstWeapon;
+	@Mock IWeapon thirdWeapon_isBeatByFirstWeaponButBeatsSecond;
 
 	@Mock IGameConfig gameConfig;
 	List<IWeapon> weaponList;
@@ -41,10 +41,20 @@ public class TwoPlayerGamePlays {
 		context.checking(new Expectations() {
 			{
 				
-				allowing(firstWeapon).doesBeat(beatsFirstWeapon);
+				allowing(firstWeapon).doesBeat(secondWeapon_beatsFirstWeapon);
+				will(returnValue(false));
+				allowing(firstWeapon).doesBeat(thirdWeapon_isBeatByFirstWeaponButBeatsSecond);
+				will(returnValue(true));
+				
+				allowing(secondWeapon_beatsFirstWeapon).doesBeat(firstWeapon);
+				will(returnValue(true));
+				allowing(secondWeapon_beatsFirstWeapon).doesBeat(thirdWeapon_isBeatByFirstWeaponButBeatsSecond);
 				will(returnValue(false));
 				
-				
+				allowing(thirdWeapon_isBeatByFirstWeaponButBeatsSecond).doesBeat(firstWeapon);
+				will(returnValue(false));
+				allowing(thirdWeapon_isBeatByFirstWeaponButBeatsSecond).doesBeat(secondWeapon_beatsFirstWeapon);
+				will(returnValue(true));
 //				weaponList = Arrays.asList(firstWeapon, weapon2, weapon3);
 //
 //				allowing(gameConfig).getWeapons();
@@ -76,7 +86,7 @@ public class TwoPlayerGamePlays {
 				will(returnValue(firstWeapon));
 
 				allowing(player2).getPlay();
-				will(returnValue(beatsFirstWeapon));
+				will(returnValue(secondWeapon_beatsFirstWeapon));
 
 			}
 		});
@@ -92,7 +102,7 @@ public class TwoPlayerGamePlays {
 		assertThat("should map player1 to firstWeapon", plays,
 				Matchers.hasEntry(player1, firstWeapon));
 		assertThat("should map player2 to weapon2", plays,
-				Matchers.hasEntry(player2, beatsFirstWeapon));
+				Matchers.hasEntry(player2, secondWeapon_beatsFirstWeapon));
 
 		assertThat("after getplays, we have played", sut.hasPlayed(),
 				Matchers.is(true));
@@ -123,7 +133,7 @@ public class TwoPlayerGamePlays {
 				will(returnValue(firstWeapon));
 				
 				allowing(player2).getPlay();
-				will(returnValue(isBeatByFirstWeapon));
+				will(returnValue(thirdWeapon_isBeatByFirstWeaponButBeatsSecond));
 			}
 		});
 		
@@ -140,7 +150,7 @@ public class TwoPlayerGamePlays {
 				will(returnValue(firstWeapon));
 				
 				allowing(player2).getPlay();
-				will(returnValue(beatsFirstWeapon));
+				will(returnValue(secondWeapon_beatsFirstWeapon));
 			}
 		});
 		
