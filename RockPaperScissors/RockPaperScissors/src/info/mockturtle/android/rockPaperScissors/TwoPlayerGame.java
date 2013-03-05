@@ -63,7 +63,7 @@ public class TwoPlayerGame implements IGame {
 			}
 		}
 		
-		if ( winnerCount > 1 ) {
+		if ( winnerCount == 1 ) {
 			winner = winningPlayer;
 		}
 		hasPlayed = true;

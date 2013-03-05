@@ -40,6 +40,8 @@ public class TwoPlayerGamePlays {
 
 		context.checking(new Expectations() {
 			{
+				allowing(firstWeapon).doesBeat(firstWeapon);
+				will(returnValue(false));
 				
 				allowing(firstWeapon).doesBeat(secondWeapon_beatsFirstWeapon);
 				will(returnValue(false));
@@ -123,6 +125,8 @@ public class TwoPlayerGamePlays {
 		sut.getPlays();
 		assertThat("should not have a winner", sut.hasWinner(),
 				Matchers.is(false));
+		assertThat("winning player should be null", sut.getWinner(), Matchers.nullValue());
+		assertThat("game has been played", sut.hasPlayed(), Matchers.is(true));
 	}
 
 	@Test
@@ -141,6 +145,8 @@ public class TwoPlayerGamePlays {
 		IPlayer winner = sut.getWinner();
 		
 		assertThat("player 1 should be the winner", winner, Matchers.sameInstance(player1));
+		assertThat("game has been played", sut.hasPlayed(), Matchers.is(true));
+		assertThat("game has a winner", sut.hasWinner(), Matchers.is(true));
 	}
 	@Test
 	public void whenPlayer2BeatsPlayer1() throws Exception {
@@ -158,5 +164,7 @@ public class TwoPlayerGamePlays {
 		IPlayer winner = sut.getWinner();
 		
 		assertThat("player 2 should be the winner", winner, Matchers.sameInstance(player2));
+		assertThat("game has been played", sut.hasPlayed(), Matchers.is(true));
+		assertThat("game has a winner", sut.hasWinner(), Matchers.is(true));
 	}
 }
