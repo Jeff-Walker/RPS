@@ -1,0 +1,163 @@
+entity Employer {
+	id Long required
+}
+entity FormGroup{
+	id Long required
+	
+}
+entity Form {
+	id Long required
+
+}
+entity FormField {
+	id Long required
+
+}
+entity FormSegment {
+	id Long required
+
+}
+entity FormFieldOption {
+	id Long required
+
+}
+entity Employee {
+	id Long required
+	ssn String required
+}
+entity EmployeeForm {
+	id Long required
+
+}
+relationship OneToMany {
+	Employer{formGroup} to FormGroup{employer}
+    Employer{form} to Form{employer}
+    Employer{employee} to Employee{employer}
+    FormField{option} to FormFieldOption{formField}
+    Form{segment} to FormSegment{form}
+    Employee{form} to EmployeeForm{employee}
+    Form{employeeForm} to EmployeeForm{form}
+}
+relationship ManyToMany {
+	FormGroup{form} to Form{group}	
+    FormSegment{field} to FormField{segment}
+}
+
+
+
+
+
+
+
+entity Region {
+	regionName String
+}
+
+entity Country {
+	countryName String
+}
+
+// an ignored comment
+/** not an ignored comment */
+entity Location {
+	streetAddress String,
+	postalCode String,
+	city String,
+	stateProvince String
+}
+
+entity Department {
+	departmentName String required
+}
+
+/**
+ * Task entity.
+ * @author The JHipster team.
+ */
+entity Task {
+	title String,
+	description String
+}
+
+/**
+ * The Employee entity.
+ */
+entity Employeex {
+	/**
+	* The firstname attribute.
+	*/
+	firstName String,
+	lastName String,
+	email String,
+	phoneNumber String,
+	hireDate Instant,
+	salary Long,
+	commissionPct Long
+}
+
+entity Job {
+	jobTitle String,
+	minSalary Long,
+	maxSalary Long
+}
+
+entity JobHistory {
+	startDate Instant,
+	endDate Instant,
+	language Language
+}
+
+enum Language {
+    FRENCH, ENGLISH, SPANISH
+}
+
+relationship OneToOne {
+	Country{region} to Region
+}
+
+relationship OneToOne {
+	Location{country} to Country
+}
+
+relationship OneToOne {
+	Department{location} to Location
+}
+
+relationship ManyToMany {
+	Job{task(title)} to Task{job}
+}
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+	Employeex{job} to Job,
+	/**
+	* A relationship
+	*/
+	Department{employee} to
+	/**
+	* Another side of the same relationship
+	*/
+	Employeex
+}
+/*
+relationship ManyToOne {
+	Employeex{manager} to Employeex
+}
+*/
+// defining multiple oneToOne relationships
+relationship OneToOne {
+	JobHistory{job} to Job,
+	JobHistory{department} to Department,
+	JobHistory{employee} to Employeex
+}
+
+// Set pagination options
+paginate JobHistory, Employeex with infinite-scroll
+paginate Job with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except Employeex, Job
+// Set an angular suffix
+angularSuffix * with mySuffix
